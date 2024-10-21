@@ -1,3 +1,3 @@
-#OTUS micro-services course homework
+# OTUS micro-services course homework
 
 Hello OTUS!
