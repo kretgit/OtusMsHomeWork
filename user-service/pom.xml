@@ -17,6 +17,7 @@
         <dependency>
             <groupId>ru.otus.ms</groupId>
             <artifactId>common</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -34,5 +35,14 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
