@@ -1,0 +1,9 @@
+#IDE files
+*.iml
+.idea/
+conf/
+logs/
+target/
+
+#Secret files
+*prom.y*ml
