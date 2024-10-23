@@ -5,13 +5,14 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.otus.ms.common.CommonController;
 import ru.otus.ms.common.model.user.User;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UserServiceController {
+public class UserServiceController extends CommonController {
 
     private final UserService userService;
 
