@@ -48,5 +48,5 @@
     </root>
 
     <!--Кастомный log level для пакета внутри конкретного сервиса (../src.main.java...) -->
-    <logger name="${CORE_PACKAGE}" level="trace"/>
+    <logger name="${CORE_PACKAGE}" level="info"/>
 </configuration>
