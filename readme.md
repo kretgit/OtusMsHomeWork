@@ -1,3 +1,11 @@
 # OTUS micro-services course homework
 
-Hello OTUS!
+build project
+````
+mvn clean package
+````
+
+build project module
+````
+mvn --projects 'common,user-service' clean package -DskipTests=true
+````
