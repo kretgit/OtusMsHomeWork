@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /user
 
+user:
+  max-count: 1000 # максимально допустимое количество пользователей в приложении
+  max-len-param: 255 # максимальное количество символов в параметрах пользователя
+
 #Logging
 logging:
   config: "classpath:logback.xml"
