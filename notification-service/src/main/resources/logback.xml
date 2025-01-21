@@ -3,7 +3,7 @@
 
     <property name="FOLDER" value="logs" />
     <property name="SERVICE_NAME" value="notification" />
-    <property name="CORE_PACKAGE" value="ru.otus.ms.notification"/>
+    <property name="CORE_PACKAGE" value="ru.otus.ms.notificationservice"/>
 
     <appender name="RollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${FOLDER}/${SERVICE_NAME}.log</file>

@@ -24,7 +24,7 @@
 		<lombok.version>1.18.20</lombok.version>
 
 		<module.common.version>1.0.0</module.common.version>
-		<module.notification.version>1.0.0</module.notification.version>
+		<module.notificationservice.version>1.0.0</module.notificationservice.version>
 		<module.userservice.version>1.0.0</module.userservice.version>
 		<module.kitchenservice.version>1.0.0</module.kitchenservice.version>
 		<module.orderservice.version>1.0.0</module.orderservice.version>
@@ -32,7 +32,7 @@
 
 	<modules>
         <module>common</module>
-		<module>notification</module>
+		<module>notification-service</module>
 		<module>user-service</module>
 		<module>kitchen-service</module>
 		<module>order-service</module>

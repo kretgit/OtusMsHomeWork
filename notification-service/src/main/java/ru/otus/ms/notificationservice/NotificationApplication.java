@@ -1,4 +1,4 @@
-package ru.otus.ms.notification;
+package ru.otus.ms.notificationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

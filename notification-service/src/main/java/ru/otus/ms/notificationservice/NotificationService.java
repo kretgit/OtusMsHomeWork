@@ -1,4 +1,4 @@
-package ru.otus.ms.notification;
+package ru.otus.ms.notificationservice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>notification</artifactId>
-    <version>${module.notification.version}</version>
+    <version>${module.notificationservice.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
