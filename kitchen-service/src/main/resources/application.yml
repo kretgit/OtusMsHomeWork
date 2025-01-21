@@ -1,0 +1,10 @@
+server:
+  port: 8200
+  servlet:
+    context-path: /kitchen
+
+#spring:
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: "GMT+3"
+#    locale: ru_RU

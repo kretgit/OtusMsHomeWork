@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Slf4j
-public class notificationIntegrationTest {
+public class NotificationIntegrationTest {
     @Test
     void contextRefreshed() {
         log.info("notification context refreshed");

@@ -26,12 +26,16 @@
 		<module.common.version>1.0.0</module.common.version>
 		<module.notification.version>1.0.0</module.notification.version>
 		<module.userservice.version>1.0.0</module.userservice.version>
+		<module.kitchenservice.version>1.0.0</module.kitchenservice.version>
+		<module.orderservice.version>1.0.0</module.orderservice.version>
 	</properties>
 
 	<modules>
         <module>common</module>
 		<module>notification</module>
 		<module>user-service</module>
+		<module>kitchen-service</module>
+		<module>order-service</module>
 	</modules>
 
 	<dependencyManagement>
