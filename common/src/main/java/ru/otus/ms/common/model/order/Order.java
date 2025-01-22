@@ -1,9 +1,12 @@
 package ru.otus.ms.common.model.order;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +15,7 @@ import java.util.Map;
 @Builder
 public class Order {
     private String id;
-    private Map<FoodType, Integer> details;
+    private OrderDetails details;
     private int amount;
     private OrderStatus status;
     private LocalDateTime created;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.ms.common.exception.CommonException;
 import ru.otus.ms.common.model.order.FoodType;
 import ru.otus.ms.common.model.order.Order;
+import ru.otus.ms.common.model.order.OrderDetails;
 import ru.otus.ms.common.model.order.OrderStatus;
 import ru.otus.ms.common.utils.Integration;
 
@@ -32,13 +33,13 @@ public class OrderService {
     }
 
     private Order checkRequestAndCreateOrder(OrderController.CreateOrderRq rq) throws CommonException {
-        Map<String, Integer> items = rq.getItems();
+        Map<String, Integer> requestItems = rq.getItems();
 
-        if (items.size() == 0 || FoodType.maxItemsExceeded(items.size())) {
+        if (requestItems.size() == 0 || FoodType.maxItemsExceeded(requestItems.size())) {
             throw new CommonException("Слишком много элементов в заказе");
         }
 
-        Map<FoodType, Integer> details = new HashMap<>();
+        Map<FoodType, Integer> items = new HashMap<>();
 
         rq.getItems().forEach((k, v) -> {
             FoodType type = FoodType.findType(k);
@@ -52,15 +53,15 @@ public class OrderService {
                         type.name(), type.getMaxItems()));
             }
 
-            details.put(type, v);
+            items.put(type, v);
         });
 
         String orderId = getNextOrderId();
-        int amount = countAmount(details);
+        int amount = countAmount(items);
 
         return Order.builder()
                 .id(orderId)
-                .details(details)
+                .details(new OrderDetails(items))
                 .amount(amount)
                 .status(OrderStatus.NEW)
                 .created(LocalDateTime.now())

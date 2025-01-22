@@ -22,6 +22,9 @@
 		<spring.version>5.3.13</spring.version>
 		<liquibase.version>3.10.3</liquibase.version>
 		<lombok.version>1.18.20</lombok.version>
+		<postgresql.version>42.3.8</postgresql.version>
+		<hibernate-types.version>2.14.0</hibernate-types.version>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
 
 		<module.common.version>1.0.0</module.common.version>
 		<module.notificationservice.version>1.0.0</module.notificationservice.version>
@@ -89,7 +92,18 @@
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
 				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.vladmihalcea</groupId>
+				<artifactId>hibernate-types-52</artifactId>
+				<version>${hibernate-types.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${mapstruct.version}</version>
 			</dependency>
 
 			<dependency>
