@@ -1,12 +1,14 @@
 package ru.otus.ms.orderservice;
 
 import lombok.*;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.ms.common.CommonController;
 import ru.otus.ms.common.model.order.Order;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,5 +32,10 @@ public class OrderController extends CommonController {
     @PostMapping("create")
     public Order createNewOrder(@RequestBody CreateOrderRq rq) {
         return orderService.createOrder(rq);
+    }
+
+    @GetMapping("recent")
+    public List<Order> getRecentOrders() {
+        return orderService.getRecentOrders();
     }
 }

@@ -1,6 +1,8 @@
 package ru.otus.ms.orderservice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.otus.ms.common.exception.CommonException;
 import ru.otus.ms.common.model.order.FoodType;
@@ -8,15 +10,29 @@ import ru.otus.ms.common.model.order.Order;
 import ru.otus.ms.common.model.order.OrderDetails;
 import ru.otus.ms.common.model.order.OrderStatus;
 import ru.otus.ms.common.utils.Integration;
+import ru.otus.ms.orderservice.repo.OrderMapper;
+import ru.otus.ms.orderservice.repo.OrderRepository;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class OrderService {
+
+    private final OrderRepository orderRepository;
+
+    private final OrderMapper orderMapper;
+
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
+        this.orderRepository = orderRepository;
+        this.orderMapper = orderMapper;
+    }
 
     public Order createOrder(OrderController.CreateOrderRq rq) {
         Order newOrder;
@@ -28,6 +44,7 @@ public class OrderService {
             return null;
         }
 
+        orderRepository.save(orderMapper.toDb(newOrder));
         sendNotification(Integration.toJson(newOrder));
         return newOrder;
     }
@@ -46,6 +63,10 @@ public class OrderService {
 
             if (type == null) {
                 throw new CommonException("В меню отсутствует " + k);
+            }
+
+            if (v <= 0) {
+                throw new CommonException("Не допускается передавать 0 или отрицательное значение");
             }
 
             if (v > type.getMaxItems()) {
@@ -69,7 +90,7 @@ public class OrderService {
     }
 
     private void sendNotification(String message) {
-        log.error(message);
+        log.info(message);
     }
 
     private String getNextOrderId() {
@@ -78,6 +99,16 @@ public class OrderService {
 
     private int countAmount(Map<FoodType, Integer> details) {
         return details.entrySet().stream().mapToInt(e -> e.getValue() * e.getKey().getAmount()).sum();
+    }
+
+    public List<Order> getRecentOrders() {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.Direction.DESC, "created");
+        OffsetDateTime created = OffsetDateTime.now().minusDays(7);
+
+        return orderRepository.findAllByCreatedAfter(created, pageRequest)
+                .stream()
+                .map(orderMapper::toWeb)
+                .collect(Collectors.toList());
     }
 
 
