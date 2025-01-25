@@ -34,7 +34,7 @@ public class NotificationService {
             case NEW:
                 return String.format("Уважаемый клиент!\nПолучен заказ %s\nОжидайте оповещений", id);
             case PROGRESS:
-                return String.format("Уважаемый клиент!\nВаш заказ %s передан уже готорят\nПожалуйста, подождите", id);
+                return String.format("Уважаемый клиент!\nВаш заказ %s уже готовят\nПожалуйста, подождите", id);
             case DONE:
                 long durationSec = DateTimeUtils.getTimeDiff(order.getCreated(), LocalDateTime.now(), TimeUnit.SECONDS);
                 return String.format("Уважаемый клиент!\nВаш заказ %s готов\nДлительность ожидания составила %s секунд" +

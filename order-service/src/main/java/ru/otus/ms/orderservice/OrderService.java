@@ -9,6 +9,7 @@ import ru.otus.ms.common.model.order.FoodType;
 import ru.otus.ms.common.model.order.Order;
 import ru.otus.ms.common.model.order.OrderDetails;
 import ru.otus.ms.common.model.order.OrderStatus;
+import ru.otus.ms.orderservice.activemq.ActiveMqProducer;
 import ru.otus.ms.orderservice.repo.OrderEntity;
 import ru.otus.ms.orderservice.repo.OrderMapper;
 import ru.otus.ms.orderservice.repo.OrderRepository;
@@ -28,14 +29,19 @@ public class OrderService {
 
     private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
+    private final ActiveMqProducer producer;
+
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, ActiveMqProducer producer) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
+        this.producer = producer;
     }
 
     public Order createOrder(OrderController.CreateOrderRq rq) {
+        log.info("Получен новый запрос на заказ, проверяем...");
         Order newOrder = checkRequestAndCreateOrder(rq);
         onSaveOrder(newOrder);
+        log.info("Создан новый заказ " + newOrder.getId());
         return newOrder;
     }
 
@@ -98,8 +104,11 @@ public class OrderService {
     }
 
     public void updateOrder(Order order) {
+        String id = order.getId();
+        log.info("Запрос на изменение заказа " + id);
         checkOrderUpdatable(order);
         onSaveOrder(order);
+        log.info("Заказ " + id + " успешно изменен");
     }
 
     private void checkOrderUpdatable(Order order) {
@@ -114,7 +123,7 @@ public class OrderService {
     }
 
     private void sendOrderChangeNotification(Order order) {
-        log.info("notification sent...");
+        producer.sendMessage(order);
     }
 
     private void onSaveOrder(Order order) {

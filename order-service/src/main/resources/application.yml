@@ -25,3 +25,8 @@ spring:
     default-schema: order_service
     user: otus_db_user
     password: otus_db_password
+
+order:
+  active-mq:
+    broker-url: tcp://localhost:61616
+    produce-order-topic: ORDER_TOPIC
