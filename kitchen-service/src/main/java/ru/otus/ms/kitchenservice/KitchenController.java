@@ -16,7 +16,7 @@ public class KitchenController extends CommonController {
     }
 
     @PostMapping("prepare")
-    public Order prepareOrder(@RequestBody Order order) {
-        return kitchenService.prepareOrder(order);
+    public void doOrder(@RequestBody Order order) {
+        kitchenService.doOrder(order);
     }
 }

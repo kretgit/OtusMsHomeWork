@@ -38,4 +38,9 @@ public class OrderController extends CommonController {
     public List<Order> getRecentOrders() {
         return orderService.getRecentOrders();
     }
+
+    @PostMapping("update")
+    public void updateOrder(@RequestBody Order order) {
+        orderService.updateOrder(order);
+    }
 }

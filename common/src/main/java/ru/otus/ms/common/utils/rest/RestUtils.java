@@ -23,8 +23,8 @@ public class RestUtils {
     public static <T> T sendHttpRequest(RestTemplate restTemplate,
                                         HttpMethod httpMethod,
                                         String url,
-                                        HttpHeaders additionalHeaders,
-                                        @Nullable ParameterizedTypeReference<T> returnType,
+                                        @Nullable HttpHeaders additionalHeaders,
+                                        ParameterizedTypeReference<T> returnType,
                                         @Nullable Object requestBody) {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(requestBody, addHttpHeaders(additionalHeaders));

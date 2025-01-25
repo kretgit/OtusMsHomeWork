@@ -3,8 +3,5 @@ server:
   servlet:
     context-path: /kitchen
 
-#spring:
-#  jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    time-zone: "GMT+3"
-#    locale: ru_RU
+kitchen:
+  order-service-base-url: "http://localhost:8300/order"

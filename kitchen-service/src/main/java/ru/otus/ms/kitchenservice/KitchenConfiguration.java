@@ -14,7 +14,13 @@ import java.util.concurrent.Executors;
 @Data
 public class KitchenConfiguration {
 
-    private long preparingTimeMs = 10_000;
+    private long preparingTimeMs = 20_000;
+
+    private long checkingTimeMs = 10_000;
+
+    private int orderMaxHoursAge = 24;
+
+    private String orderServiceBaseUrl;
 
     @Bean
     public ExecutorService getExecutorService() {

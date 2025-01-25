@@ -9,7 +9,7 @@ import ru.otus.ms.common.model.order.FoodType;
 import ru.otus.ms.common.model.order.Order;
 import ru.otus.ms.common.model.order.OrderDetails;
 import ru.otus.ms.common.model.order.OrderStatus;
-import ru.otus.ms.common.utils.Integration;
+import ru.otus.ms.orderservice.repo.OrderEntity;
 import ru.otus.ms.orderservice.repo.OrderMapper;
 import ru.otus.ms.orderservice.repo.OrderRepository;
 
@@ -18,7 +18,6 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,17 +34,8 @@ public class OrderService {
     }
 
     public Order createOrder(OrderController.CreateOrderRq rq) {
-        Order newOrder;
-
-        try {
-           newOrder = checkRequestAndCreateOrder(rq);
-        } catch (CommonException e) {
-            sendNotification(e.getMessage());
-            return null;
-        }
-
-        orderRepository.save(orderMapper.toDb(newOrder));
-        sendNotification(Integration.toJson(newOrder));
+        Order newOrder = checkRequestAndCreateOrder(rq);
+        onSaveOrder(newOrder);
         return newOrder;
     }
 
@@ -89,12 +79,8 @@ public class OrderService {
                 .build();
     }
 
-    private void sendNotification(String message) {
-        log.info(message);
-    }
-
     private String getNextOrderId() {
-        return UUID.randomUUID().toString();
+        return orderRepository.getNextOrderId();
     }
 
     private int countAmount(Map<FoodType, Integer> details) {
@@ -109,6 +95,31 @@ public class OrderService {
                 .stream()
                 .map(orderMapper::toWeb)
                 .collect(Collectors.toList());
+    }
+
+    public void updateOrder(Order order) {
+        checkOrderUpdatable(order);
+        onSaveOrder(order);
+    }
+
+    private void checkOrderUpdatable(Order order) {
+        String id = order.getId();
+        OrderEntity entity = orderRepository.findById(order.getId())
+                .orElseThrow(() -> new CommonException("Заказ " + id + " не найден"));
+
+        OrderStatus entityStatus = entity.getStatus();
+        if (entityStatus.equals(OrderStatus.CANCEL)) {
+            throw new CommonException("Недопустимо изменять отмененный заказ");
+        }
+    }
+
+    private void sendOrderChangeNotification(Order order) {
+        log.info("notification sent...");
+    }
+
+    private void onSaveOrder(Order order) {
+        orderRepository.save(orderMapper.toDb(order));
+        sendOrderChangeNotification(order);
     }
 
 
