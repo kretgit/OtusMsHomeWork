@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchen-serivce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kitchen-service
+  template:
+    metadata:
+      labels:
+        app: kitchen-service
+    spec:
+      containers:
+        - name: kitchen-service
+          image: kretdocker/kitchen-service:latest
+          ports:
+            - containerPort: 8100
+          env:
+            - name: BROKER_URL
+              value: tcp://host.minikube.internal:61616
+            - name: ORDER_SERVICE_URL
+              value: http://order-service:8300/order
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1

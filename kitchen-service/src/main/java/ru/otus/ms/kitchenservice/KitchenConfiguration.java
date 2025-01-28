@@ -20,7 +20,7 @@ public class KitchenConfiguration {
 
     private int orderMaxHoursAge = 24;
 
-    private String orderServiceBaseUrl;
+    private String orderServiceUrl;
 
     @Bean
     public ExecutorService getExecutorService() {

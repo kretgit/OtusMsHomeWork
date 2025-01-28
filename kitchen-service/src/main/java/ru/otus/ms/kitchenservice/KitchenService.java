@@ -105,7 +105,7 @@ public class KitchenService {
     }
 
     private void callOrderService(Order order) {
-        String url = RestUtils.composeUrl(configuration.getOrderServiceBaseUrl(), "update");
+        String url = RestUtils.composeUrl(configuration.getOrderServiceUrl(), "update");
         RestUtils.sendHttpRequest(restTemplate, HttpMethod.POST, url, null,
                 ParameterizedTypeReference.forType(Void.class), order);
     }

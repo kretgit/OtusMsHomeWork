@@ -51,6 +51,12 @@ curl http://localhost:8000/user/health
 kubectl rollout history deployment/user-serivce-deployment
 kubectl logs (-f как и tail -f) user-serivce-deployment-5b589d6479-7r29v
 
+kubectl get svc
+kubectl get nodes -o wide
+
+kubectl delete pods,services,deployments -l name=user-service
+kubectl -n app2 delete pod,svc,deployments --all
+
 minikube ssh
 curl http://10.244.0.8:8000/user/health
 ````

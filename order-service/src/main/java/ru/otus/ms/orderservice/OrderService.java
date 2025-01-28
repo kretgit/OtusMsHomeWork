@@ -124,6 +124,7 @@ public class OrderService {
 
     private void sendOrderChangeNotification(Order order) {
         producer.sendMessage(order);
+        log.info("Оповещение отправлено в брокер");
     }
 
     private void onSaveOrder(Order order) {
