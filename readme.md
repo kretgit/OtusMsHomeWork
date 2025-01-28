@@ -26,7 +26,16 @@ minikube status
 minikube delete --all --purge
 ````
 
-install ingress
+## ingress
+
+install ingress via helm
+````
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+````
+
+config ingress via minikube
 ````
 minikube addons list
 minikube addons enable ingress
@@ -42,6 +51,7 @@ kubectl config set-context --current --namespace=app
 
 kubectl apply -f deployment.yaml
 kubectl get deploy
+kubectl rollout restart deployment order-service
 
 kubectl get po
 kubectl get po -o wide
@@ -56,7 +66,23 @@ kubectl get nodes -o wide
 
 kubectl delete pods,services,deployments -l name=user-service
 kubectl -n app2 delete pod,svc,deployments --all
+````
 
+## minikube useful commands
+
+````
 minikube ssh
+
 curl http://10.244.0.8:8000/user/health
+
+curl --location 'http://<kubectl get svc CLUSTER-IP>:8300/order/create' \
+--header 'Content-Type: application/json' \
+--data '{
+    "items": {
+        "PIZZA": 1,
+        "COLA": 1,
+        "BURGER": 1
+    }
+}'
+
 ````
