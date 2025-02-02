@@ -3,28 +3,28 @@ server:
   servlet:
     context-path: /user
 
-spring:
-  datasource:
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/otus_db?currentSchema=user_service
-    username: otus_db_user
-    password: otus_db_password
-
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        format-sql: true
-
-  liquibase:
-    enabled: true
-    change-log: classpath:liquibase/changelog.xml
-    default-schema: user_service
-    user: otus_db_user
-    password: otus_db_password
+#spring:
+#  datasource:
+#    platform: postgres
+#    url: jdbc:postgresql://localhost:5432/otus_db?currentSchema=user_service
+#    username: otus_db_user
+#    password: otus_db_password
+#
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: validate
+#    properties:
+#      hibernate:
+#        format-sql: true
+#
+#  liquibase:
+#    enabled: true
+#    change-log: classpath:liquibase/changelog.xml
+#    default-schema: user_service
+#    user: otus_db_user
+#    password: otus_db_password
 
 user:
   max-count: 1000 # максимально допустимое количество пользователей в приложении
