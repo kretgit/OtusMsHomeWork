@@ -2,8 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: junk-food-ingress
-#  annotations:
-#    nginx.ingress.kubernetes.io/rewrite-target: /
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "http://user-service.app.svc.cluster.local:8000/user/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X_User_Email"
+    nginx.ingress.kubernetes.io/auth-realm: "Для доступа к сервису требуется аутентификация"
 spec:
   ingressClassName: nginx
   rules:
@@ -31,3 +33,10 @@ spec:
                 name: notification-service
                 port:
                   number: 8100
+          - path: /user
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 8000

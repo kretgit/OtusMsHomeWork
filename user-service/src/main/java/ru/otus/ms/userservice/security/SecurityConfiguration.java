@@ -8,19 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
-
     @Value("${security-settings.url-white-list}")
     private String[] urlWhiteList;
-
-    public SecurityConfiguration(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,13 +29,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
+                .inMemoryAuthentication()
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery(
-                        "select lower(email) as username, enc_pass as password, true as enabled from users where lower(email) = ?")
-                .authoritiesByUsernameQuery(
-                        "select lower(email) as username, unnest(roles) as authority from users where lower(email) = ?");
+                .withUser("admin@mail.ru")
+                .password("$2y$12$tapTzdZbfE04o7S4BNY2IO4fOvwIkHitcG31voXXyWEtw3EvBoqVy")
+                .roles("ADMIN", "USER")
+                .and()
+                .withUser("user@mail.ru")
+                .password("$2y$12$tapTzdZbfE04o7S4BNY2IO4fOvwIkHitcG31voXXyWEtw3EvBoqVy")
+                .roles("USER");
+
     }
 
 }

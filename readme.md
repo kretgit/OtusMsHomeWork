@@ -39,7 +39,7 @@ config ingress via minikube
 ````
 minikube addons list
 minikube addons enable ingress
-minikube addons enable ingress-dns 
+minikube addons enable ingress-dns
 minikube tunnel
 ````
 
@@ -66,6 +66,7 @@ kubectl get nodes -o wide
 
 kubectl delete pods,services,deployments -l name=user-service
 kubectl -n app2 delete pod,svc,deployments --all
+kubectl delete all --all -n app
 ````
 
 ## minikube useful commands
