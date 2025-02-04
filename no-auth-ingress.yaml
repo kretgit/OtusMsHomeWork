@@ -1,39 +1,35 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: junk-food-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "http://user-service.app.svc.cluster.local:8000/user/auth"
-    nginx.ingress.kubernetes.io/auth-response-headers: "X_User_Email,X_User_Is_Admin"
-    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+  name: junk-food-ingress-no-auth
 spec:
   ingressClassName: nginx
   rules:
     - host: arch.homework
       http:
         paths:
-          - path: /order
+          - path: /order/health
             pathType: Prefix
             backend:
               service:
                 name: order-service
                 port:
                   number: 8300
-          - path: /kitchen
+          - path: /kitchen/healt
             pathType: Prefix
             backend:
               service:
                 name: kitchen-service
                 port:
                   number: 8200
-          - path: /notification
+          - path: /notification/health
             pathType: Prefix
             backend:
               service:
                 name: notification-service
                 port:
                   number: 8100
-          - path: /user
+          - path: /user/health
             pathType: Prefix
             backend:
               service:

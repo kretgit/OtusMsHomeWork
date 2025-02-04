@@ -43,6 +43,19 @@ minikube addons enable ingress-dns
 minikube tunnel
 ````
 
+## Prometheus & Grafana
+
+install via helm
+````
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+
+если еще нет пароля для графаны (default = prom-operator):
+kubectl get secret --namespace monitoring prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+````
+
 ## kubectl useful commands
 
 ````
