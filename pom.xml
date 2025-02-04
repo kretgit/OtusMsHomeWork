@@ -25,6 +25,7 @@
 		<postgresql.version>42.3.8</postgresql.version>
 		<hibernate-types.version>2.14.0</hibernate-types.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<micrometer.version>1.6.6</micrometer.version>
 
 		<module.common.version>1.0.0</module.common.version>
 		<module.notificationservice.version>1.0.0</module.notificationservice.version>
@@ -70,6 +71,11 @@
 				<artifactId>spring-boot-starter-security</artifactId>
 				<version>${spring.boot.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
 
 			<dependency>
 				<groupId>org.springframework.kafka</groupId>
@@ -133,6 +139,17 @@
 				<artifactId>spring-kafka-test</artifactId>
 				<scope>test</scope>
 				<version>${spring.boot.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.micrometer</groupId>
+				<artifactId>micrometer-core</artifactId>
+				<version>${micrometer.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.micrometer</groupId>
+				<artifactId>micrometer-registry-prometheus</artifactId>
+				<version>${micrometer.version}</version>
 			</dependency>
 		</dependencies>
     </dependencyManagement>

@@ -32,12 +32,28 @@ user:
 
 security-settings:
   url-white-list:
+    /actuator/**,
     /auth,
     /health,
     /register,
     /swagger-ui.html,
     /swagger-ui/**,
     /v3/api-docs/**
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
 
 #Logging
 logging:

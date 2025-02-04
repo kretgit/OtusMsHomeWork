@@ -7,12 +7,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final AuthMetricsFilter authMetricsFilter;
+
     @Value("${security-settings.url-white-list}")
     private String[] urlWhiteList;
+
+    public SecurityConfiguration(AuthMetricsFilter authMetricsFilter) {
+        this.authMetricsFilter = authMetricsFilter;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -20,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterBefore(authMetricsFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests().antMatchers(urlWhiteList).permitAll()
                 .anyRequest().authenticated()
                 .and()

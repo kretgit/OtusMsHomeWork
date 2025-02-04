@@ -1,6 +1,7 @@
 package ru.otus.ms.userservice.security;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,10 @@ public class SecurityController {
 
     @GetMapping("auth")
     public AuthenticationResponse authenticate(Authentication authentication, HttpServletResponse response) {
+        if (authentication == null || authentication.getPrincipal() == null) {
+            throw new BadCredentialsException("Для входа требуеся аутентификация");
+        }
+
         UserDetails details = (UserDetails) authentication.getPrincipal();
         response.addHeader(Headers.ADMIN_HEADER.getHeaderName(), Headers.fillAdminHeader(details));
         response.addHeader(Headers.EMAIL_HEADER.getHeaderName(), details.getUsername());
