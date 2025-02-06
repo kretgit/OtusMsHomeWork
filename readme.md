@@ -131,6 +131,8 @@ kubectl apply -f notification-service/kubernetes && \
 kubectl apply -f order-service/kubernetes && \
 kubectl apply -f ingress/demo-ingress.yaml
 ````
+ - показать `ActiveMq`
+ - показать `/order/recent`
 
 ## авторизация с 2-мя сервисами и обновленными ингрессами
 ````
@@ -143,6 +145,7 @@ kubectl delete -n app ingress demo-ingress
 kubectl apply -f user-service/kubernetes && \
 kubectl apply -f ingress/auth-ingress.yaml
 ````
+ - показать `headers` в логах
 
 ## мониторинг 1-го сервиса
 ````
@@ -158,7 +161,5 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
 
 kubectl apply -f ingress/monitoring-ingress.yaml
 ````
- - показать Headers
- - показать ActiveMq
- - показать Postgre (LiquiBase)
  - показать Prometheus
+ - показать Postgre (Liquibase)
