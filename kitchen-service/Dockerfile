@@ -4,7 +4,7 @@
 # mvn --projects 'common,kitchen-service' clean package -DskipTests=true
 # далее переходим в папку сервиса: cd kitchen-service/ и запускаем команды докера
 
-# docker build --platform linux/amd64 -t kretdocker/kitchen-service:latest .
+# docker build -t kretdocker/kitchen-service:latest .
 # docker run -p 8200:8200 kretdocker/kitchen-service:latest
 
 # docker run -p 8200:8200 --name kitchen-service -e BROKER_URL='tcp://host.docker.internal:61616' -e ORDER_SERVICE_URL='http://host.docker.internal:8300/order' kretdocker/kitchen-service:latest

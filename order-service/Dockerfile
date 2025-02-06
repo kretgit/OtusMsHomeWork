@@ -4,7 +4,7 @@
 # mvn --projects 'common,order-service' clean package -DskipTests=true
 # далее переходим в папку сервиса: cd order-service/ и запускаем команды докера
 
-# docker build --platform linux/amd64 -t kretdocker/order-service:latest .
+# docker build -t kretdocker/order-service:latest .
 # docker run -p 8300:8300 kretdocker/order-service:latest
 
 # docker run -p 8300:8300 --name order-service -e BROKER_URL='tcp://host.docker.internal:61616' -e JDBC_URL='jdbc:postgresql://host.docker.internal:5432/otus_db?currentSchema=order_service' kretdocker/order-service:latest

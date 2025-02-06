@@ -4,7 +4,7 @@
 # mvn --projects 'common,notification-service' clean package -DskipTests=true
 # далее переходим в папку сервиса: cd notification-service/ и запускаем команды докера
 
-# docker build --platform linux/amd64 -t kretdocker/notification-service:latest .
+# docker build -t kretdocker/notification-service:latest .
 # docker run -p 8100:8100 kretdocker/notification-service:latest
 
 # docker run -p 8100:8100 --name notification-service -e BROKER_URL='tcp://host.docker.internal:61616' kretdocker/notification-service:latest

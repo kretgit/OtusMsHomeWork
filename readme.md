@@ -113,3 +113,52 @@ curl --location 'http://<kubectl get svc CLUSTER-IP>:8300/order/create' \
 }'
 
 ````
+
+# План показа демо
+
+ - Docker Desktop запущен, внутри него все запущено
+ - minikube tunnel запущен
+ - нет лишних неймспейсов
+ - логи в терминале бегут, поды на месте
+
+## без авторизации с 3-мя сервисами
+````
+kubectl create ns app && \
+kubectl config set-context --current --namespace=app
+
+kubectl apply -f kitchen-service/kubernetes && \
+kubectl apply -f notification-service/kubernetes && \
+kubectl apply -f order-service/kubernetes && \
+kubectl apply -f ingress/demo-ingress.yaml
+````
+
+## авторизация с 2-мя сервисами и обновленными ингрессами
+````
+kubectl delete -n app deployment kitchen-service && \
+kubectl delete -n app service kitchen-service && \
+kubectl delete -n app deployment notification-service && \
+kubectl delete -n app service notification-service && \
+kubectl delete -n app ingress demo-ingress
+
+kubectl apply -f user-service/kubernetes && \
+kubectl apply -f ingress/auth-ingress.yaml
+````
+
+## мониторинг 1-го сервиса
+````
+kubectl delete -n app deployment order-service && \
+kubectl delete -n app service order-service
+
+minikube dashboard
+
+helm install prometheus prometheus-community/kube-prometheus-stack \
+--namespace monitoring \
+--create-namespace \
+--set grafana.enabled=false
+
+kubectl apply -f ingress/monitoring-ingress.yaml
+````
+ - показать Headers
+ - показать ActiveMq
+ - показать Postgre (LiquiBase)
+ - показать Prometheus
