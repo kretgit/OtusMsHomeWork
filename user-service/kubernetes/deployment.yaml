@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: kretdocker/user-service:latest
+          ports:
+            - containerPort: 8000
+#          env:
+#            - name: JDBC_URL
+#              value: jdbc:postgresql://host.minikube.internal:5432/otus_db?currentSchema=user_service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1

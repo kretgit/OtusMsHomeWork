@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+        logicalFilePath="changelog.xml">
+
+
+    <changeSet id="1" author="kretovaa">
+
+        <createTable tableName="orders">
+            <column name="id" type="varchar">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="details" type="jsonb">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="timestamptz" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="orders_id_seq" startValue="100" incrementBy="1"/>
+
+        <rollback>
+            <dropTable tableName="orders"/>
+            <dropTable tableName="databasechangelog"/>
+            <dropTable tableName="databasechangeloglock"/>
+            <dropSequence sequenceName="orders_id_seq"/>
+        </rollback>
+    </changeSet>
+
+
+
+</databaseChangeLog>

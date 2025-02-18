@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CommonExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleException(CommonException ex) {
-        log.error(ex.getMessage(), ex);
+        if (log.isDebugEnabled()) {
+            log.error(ex.getMessage(), ex);
+        } else {
+            log.error(ex.getMessage());
+        }
+
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,0 +1,10 @@
+server:
+  port: 8200
+  servlet:
+    context-path: /kitchen
+
+kitchen:
+  order-service-url: "http://localhost:8300/order"
+  active-mq:
+    broker-url: tcp://localhost:61616
+    consume-order-topic: ORDER_TOPIC

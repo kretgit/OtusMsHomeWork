@@ -1,0 +1,15 @@
+server:
+  port: 8100
+  servlet:
+    context-path: /notification
+
+notification:
+  active-mq:
+    broker-url: tcp://localhost:61616
+    consume-order-topic: ORDER_TOPIC
+
+#spring:
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: "GMT+3"
+#    locale: ru_RU

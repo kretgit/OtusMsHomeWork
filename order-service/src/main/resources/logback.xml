@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <property name="FOLDER" value="logs" />
+    <property name="SERVICE_NAME" value="order-service" />
+    <property name="CORE_PACKAGE" value="ru.otus.ms.orderservice"/>
+
+    <appender name="RollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FOLDER}/${SERVICE_NAME}.log</file>
+        <append>true</append>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level ${PID} -- %logger{36}.%M - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FOLDER}/%d{yyyy-MM-dd}_%i-${SERVICE_NAME}.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>30MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%green(%thread)] %highlight(%-5level) %logger{36}.%M : %msg%n%throwable
+<!--                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level : %logger{36}.%M - %msg%n-->
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="AsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="RollingFileAppender"/>
+    </appender>
+
+    <appender name="AsyncConsoleAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="ConsoleAppender"/>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="AsyncAppender"/>
+        <appender-ref ref="AsyncConsoleAppender"/>
+    </root>
+
+    <!--Кастомный log level для пакета внутри конкретного сервиса (../src.main.java...) -->
+    <logger name="${CORE_PACKAGE}" level="info"/>
+</configuration>
